@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { getUrlData, getStatusCode } = require('./utils');
+const { optionsResponse } = require('./responses');
 
 const PORT = 5555;
 
@@ -10,6 +11,8 @@ const DEFAULT_STATUS_CODE = 200;
 const DEFAULT_TIMEOUT = 0;
 
 const requestListener = (req, res) => {
+  optionsResponse(req);
+
   const { id, timeout, statusCode } = getUrlData(req.url);
 
   const timeoutToShow = timeout ? timeout : DEFAULT_TIMEOUT;
