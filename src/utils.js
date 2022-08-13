@@ -3,7 +3,6 @@ const getStatusCode = (status) => {
 };
 
 const getInput = (input) => {
-  console.log('input', input);
   return !isNaN(+input) ? +input : undefined;
 };
 
