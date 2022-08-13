@@ -1,39 +1,34 @@
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const { getUrlData, getStatusCode } = require('./utils');
+
 const PORT = 5555;
 
-const getStatusCode = (status) => {
-  if (!status) {
-    return 200;
-  }
+const DEFAULT_STATUS_CODE = 200;
+const DEFAULT_TIMEOUT = 0;
 
-  return status >= 200 && status < 600 ? status : 200;
-};
+const requestListener = (req, res) => {
+  const { id, timeout, statusCode } = getUrlData(req.url);
 
-const requestListener = function (req, res) {
-  const [_, id, time, code] = req.url.split('/').map((item) => +item);
-  const statusCode = getStatusCode(code);
-  const timeout = +time !== NaN ? time : 0; 
+  const timeoutToShow = timeout ? timeout : DEFAULT_TIMEOUT;
 
-  if (id && id !== NaN) {
+  const statusCodeToUse = statusCode
+    ? getStatusCode(statusCode)
+    : DEFAULT_STATUS_CODE;
+
+  if (id) {
     setTimeout(() => {
       const responseData = {
-        message: `Your id is ${id}, timeout is ${timeout}ms, statusCode is ${statusCode}`,
+        message: `Your id is ${id}, timeout is ${timeoutToShow} ms, statusCode is ${statusCodeToUse}`,
       };
-      res.writeHead(statusCode);
+      res.writeHead(statusCodeToUse);
       res.end(JSON.stringify(responseData));
-    }, timeout);
+    }, timeoutToShow);
   } else {
     res.writeHead(200);
-    res.end(`## Get Data 
-    
-    URL: /{id}/{?timeout}/{?statusCode}
-
-    Parameters
-
-         id - Request id
-         timeout (optional) - Server response timeout (default = 0)
-         statusCode (optional) - Response status code  (default = 200)
-    `);
+    res.end(fs.readFileSync(path.resolve(__dirname, '../Readme.md')));
   }
 };
 
