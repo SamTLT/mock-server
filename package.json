@@ -4,8 +4,11 @@
   "description": "Simple mock node.js server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src"
   },
   "author": "Iakov Khovalkin",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "nodemon": "^2.0.19"
+  }
 }
