@@ -10,8 +10,9 @@ const getStatusCode = (status) => {
 };
 
 const requestListener = function (req, res) {
-  const [_, id, timeout, code] = req.url.split('/').map((item) => +item);
+  const [_, id, time, code] = req.url.split('/').map((item) => +item);
   const statusCode = getStatusCode(code);
+  const timeout = +time !== NaN ? time : 0; 
 
   if (id && id !== NaN) {
     setTimeout(() => {
