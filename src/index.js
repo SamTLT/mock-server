@@ -1,6 +1,5 @@
 const http = require('http');
 const fs = require('fs');
-const url = require('url') ;
 const path = require('path');
 
 const { getUrlData, getStatusCode } = require('./utils');
@@ -11,8 +10,7 @@ const DEFAULT_STATUS_CODE = 200;
 const DEFAULT_TIMEOUT = 0;
 
 const requestListener = (req, res) => {
-  const pathname = url.parse(req.url).pathname;
-  const { id, timeout, statusCode } = getUrlData(pathname);
+  const { id, timeout, statusCode } = getUrlData(req.url);
 
   const timeoutToShow = timeout ? timeout : DEFAULT_TIMEOUT;
 
