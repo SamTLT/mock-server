@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { getUrlData, getStatusCode } = require('./utils');
-const { optionsResponse } = require('./responses');
+const { addCorsHeaders, corsResponse } = require('./responses');
 
 const PORT = 5555;
 
@@ -11,7 +11,8 @@ const DEFAULT_STATUS_CODE = 200;
 const DEFAULT_TIMEOUT = 0;
 
 const requestListener = (req, res) => {
-  optionsResponse(req);
+  addCorsHeaders(req, res);
+  corsResponse(req, res);
 
   const { id, timeout, statusCode } = getUrlData(req.url);
 

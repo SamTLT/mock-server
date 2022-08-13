@@ -1,18 +1,20 @@
-const optionsResponse = (req) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*' /* @dev First, read about security */,
-    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-    'Access-Control-Max-Age': 2592000, // 30 days
-    /** add other headers as per requirement */
-  };
+const addCorsHeaders = (res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+  res.setHeader('Access-Control-Max-Age', 2592000); // 30 days
+};
+
+const corsResponse = (req, res) => {
+  addCorsHeaders(res);
 
   if (req.method === 'OPTIONS') {
-    res.writeHead(204, headers);
+    res.writeHead(204);
     res.end();
     return;
   }
 };
 
 module.exports = {
-  optionsResponse,
+  corsResponse,
+  addCorsHeaders,
 };
