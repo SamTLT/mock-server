@@ -3,6 +3,7 @@ This mock server helps you test responces with different statuses
 
 ## How to use 
 URL: /mock-server/{id}/{?timeout}/{?statusCode}
+
 ```sh
 id - Request id
 timeout (optional) - Server response timeout (default = 0)

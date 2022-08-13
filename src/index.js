@@ -31,7 +31,7 @@ const requestListener = (req, res) => {
     }, timeoutToShow);
   } else {
     res.writeHead(200, corsHeaders);
-    res.end(fs.readFileSync(path.resolve(__dirname, '../Readme.md')));
+    res.end(fs.readFileSync(path.resolve(__dirname, '../README.md')));
   }
 };
 
