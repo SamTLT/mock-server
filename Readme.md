@@ -1,6 +1,6 @@
 ## Get Data 
     
-URL: /{id}/{?timeout}/{?statusCode}
+URL: /mock-server/{id}/{?timeout}/{?statusCode}
 
 Parameters
 

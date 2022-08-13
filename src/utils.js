@@ -8,9 +8,10 @@ const getInput = (input) => {
 };
 
 const getUrlData = (url) => {
-  const [_, id, timeout, statusCode] = url.split('/').map(getInput);
+  const [_, apiPrefix, id, timeout, statusCode] = url.split('/').map(getInput);
 
   return {
+    apiPrefix,
     id,
     timeout,
     statusCode,
