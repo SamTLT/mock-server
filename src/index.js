@@ -25,7 +25,7 @@ const requestListener = function (req, res) {
     res.writeHead(200);
     res.end(`## Get Data 
     
-    URL: /id/{?timeout}/{?statusCode}
+    URL: /{id}/{?timeout}/{?statusCode}
 
     Parameters
 
