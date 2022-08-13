@@ -10,7 +10,7 @@ const getStatusCode = (status) => {
 };
 
 const requestListener = function (req, res) {
-  const [_, id, timeout, code] = req.url.split('/').map(item => +item);
+  const [_, id, timeout, code] = req.url.split('/').map((item) => +item);
   const statusCode = getStatusCode(code);
 
   if (id && id !== NaN) {
@@ -25,12 +25,13 @@ const requestListener = function (req, res) {
     res.writeHead(200);
     res.end(`## Get Data 
     
-    URL: /id/{?timeout}
+    URL: /id/{?timeout}/{?statusCode}
 
     Parameters
 
          id - Request id
-         timeout (optional) - Server response timeout
+         timeout (optional) - Server response timeout (default = 0)
+         statusCode (optional) - Response status code  (default = 200)
     `);
   }
 };
