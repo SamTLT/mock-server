@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { getUrlData, getStatusCode } = require('./utils');
-const { addCorsHeaders, corsResponse } = require('./responses');
+const { corsHeaders, corsResponse } = require('./responses');
 
 const PORT = 5555;
 
@@ -11,7 +11,6 @@ const DEFAULT_STATUS_CODE = 200;
 const DEFAULT_TIMEOUT = 0;
 
 const requestListener = (req, res) => {
-  addCorsHeaders(req, res);
   corsResponse(req, res);
 
   const { id, timeout, statusCode } = getUrlData(req.url);
@@ -27,11 +26,11 @@ const requestListener = (req, res) => {
       const responseData = {
         message: `Your id is ${id}, timeout is ${timeoutToShow} ms, statusCode is ${statusCodeToUse}`,
       };
-      res.writeHead(statusCodeToUse);
+      res.writeHead(statusCodeToUse, corsHeaders);
       res.end(JSON.stringify(responseData));
     }, timeoutToShow);
   } else {
-    res.writeHead(200);
+    res.writeHead(200, corsHeaders);
     res.end(fs.readFileSync(path.resolve(__dirname, '../Readme.md')));
   }
 };
