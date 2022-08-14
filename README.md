@@ -4,12 +4,12 @@ This mock server helps you test responses with different statuses
 
 ## How to use
 
-URL: /mock-server/api/v1/{id}?timeout={number}&status={number}
+URL: /mock-server/api/v1/{id}?timeout={number}&status-code={number}
 
 ```sh
 id - Request id
 timeout (optional) - Server response timeout (default = 0)
-status (optional) - Response status code  (default = 200)
+status-code (optional) - Response status code  (default = 200)
 ```
 
 ## Response examples
