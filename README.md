@@ -2,7 +2,7 @@
 This mock server helps you test responses with different statuses
 
 ## How to use 
-URL: /mock-server/{id}?timeout={number}&status={number}
+URL: /mock-server/api/v1/{id}?timeout={number}&status={number}
 
 ```sh
 id - Request id
