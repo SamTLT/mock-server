@@ -1,24 +1,28 @@
+const url = require('url');
+
 const getStatusCode = (status) => {
   return status >= 200 && status < 600 ? status : 200;
 };
 
-const getInput = (input) => {
-  return !isNaN(+input) ? +input : undefined;
+const getId = (id) => {
+  return !isNaN(+id) ? +id : undefined;
 };
 
-const getUrlData = (url) => {
-  const [_, apiPrefix, id, timeout, statusCode] = url.split('/').map(getInput);
+const getUrlData = (req, apiPrefix) => {
+  const id = req.url.replace(apiPrefix, '')
+    .split('/')[0]
+    .split('?')
+    .map(getId)[0];
+  const queryObject = url.parse(req.url, true).query;
 
   return {
-    apiPrefix,
     id,
-    timeout,
-    statusCode,
+    ...queryObject,
   };
 };
 
 module.exports = {
   getStatusCode,
-  getInput,
+  getId,
   getUrlData,
 };

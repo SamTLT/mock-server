@@ -3,32 +3,46 @@ const fs = require('fs');
 const path = require('path');
 
 const { getUrlData, getStatusCode } = require('./utils');
-const { corsHeaders, corsResponse } = require('./responses');
+const { corsHeaders, corsResponse } = require('./middleware');
+const { successResponse, errorResponse } = require('./responses');
 
 const PORT = 5555;
-
 const DEFAULT_STATUS_CODE = 200;
 const DEFAULT_TIMEOUT = 0;
+const API_PREFIX = '/mock-server/api/v1/';
 
 const requestListener = (req, res) => {
   corsResponse(req, res);
 
-  const { id, timeout, statusCode } = getUrlData(req.url);
+  const {
+    id,
+    timeout: timeoutFromQuery,
+    ['status-code']: statusFromQuery,
+  } = getUrlData(req, API_PREFIX);
 
-  const timeoutToShow = timeout ? timeout : DEFAULT_TIMEOUT;
+  const timeout = timeoutFromQuery ?? DEFAULT_TIMEOUT;
 
-  const statusCodeToUse = statusCode
-    ? getStatusCode(statusCode)
+  const statusCode = statusFromQuery
+    ? getStatusCode(statusFromQuery)
     : DEFAULT_STATUS_CODE;
 
-  if (id) {
+  if (id && req.url.includes(API_PREFIX)) {
     setTimeout(() => {
-      const responseData = {
-        message: `Your id is ${id}, timeout is ${timeoutToShow} ms, statusCode is ${statusCodeToUse}`,
+      const data = {
+        id,
+        statusCode,
+        timeout,
       };
-      res.writeHead(statusCodeToUse, corsHeaders);
-      res.end(JSON.stringify(responseData));
-    }, timeoutToShow);
+      
+      let response = successResponse(data);
+
+      if (statusCode >= 400) {
+        response = errorResponse(data);
+      }
+
+      res.writeHead(statusCode, corsHeaders);
+      res.end(JSON.stringify(response));
+    }, timeout);
   } else {
     res.writeHead(200, corsHeaders);
     res.end(fs.readFileSync(path.resolve(__dirname, '../README.md')));

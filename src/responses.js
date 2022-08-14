@@ -1,19 +1,16 @@
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*' /* @dev First, read about security */,
-  'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-  'Access-Control-Max-Age': 2592000, // 30 days
-  /** add other headers as per requirement */
-};
+const successResponse = ({ id, timeout, statusCode }) => ({
+  message: `Your id is ${id}, timeout is ${timeout} ms, response status code is ${statusCode}`,
+});
 
-const corsResponse = (req, res) => {
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204, corsHeaders);
-    res.end();
-    return;
-  }
-};
+const errorResponse = ({ id, timeout, statusCode }) => ({
+  error: {
+    status: statusCode,
+    timeout,
+    id,
+  },
+});
 
 module.exports = {
-  corsResponse,
-  corsHeaders,
+  successResponse,
+  errorResponse,
 };

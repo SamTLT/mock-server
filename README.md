@@ -1,15 +1,15 @@
 # Mock Server
-This mock server helps you test responces with different statuses
+This mock server helps you test responses with different statuses
 
 ## How to use 
-URL: /mock-server/{id}/{?timeout}/{?statusCode}
+URL: /mock-server/{id}?timeout={number}&status={number}
 
 ```sh
 id - Request id
 timeout (optional) - Server response timeout (default = 0)
-statusCode (optional) - Response status code  (default = 200)
+status (optional) - Response status code  (default = 200)
 ```
 
 # Live Server
-https://khovalkin.com/mock-server/
+https://khovalkin.com/mock-server/api/v1/
 
