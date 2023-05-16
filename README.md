@@ -28,4 +28,4 @@ URL: /mock-server/api/v1/25?timeout=100&status-code=500
 
 # Live Server
 
-https://khovalkin.com/mock-server/api/v1/
+https://mock-server-kr76.onrender.com/
